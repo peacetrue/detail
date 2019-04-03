@@ -26,3 +26,12 @@ v1.0, 2018-03-25: SNAPSHOT
 
 === V1.3
 扩展功能：使用mixin
+
+=== V1.4
+添加关闭页面按钮
+
+
+////
+cp -R /Users/xiayx/Documents/Projects/detail/src/ /Users/xiayx/Documents/Company/aum/aum-store/aum-store-admin/src/main/resources/static/detail
+////
+

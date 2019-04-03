@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="app">
-    <detail :data="data">
+    <detail :data="data" >
         <detail-header>基本信息</detail-header>
         <row>
             <detail-item label="渠道商编号" name="code"></detail-item>
@@ -22,12 +22,71 @@
             <detail-item label="渠道商简称" name="shortName"></detail-item>
             <detail-item label="注册手机号" name="mobile"></detail-item>
         </row>
+
         <detail-header>推广信息</detail-header>
         <detail-table :label="promotion" name="promotions"></detail-table>
+
+        <detail-header>收益规则</detail-header>
+        <row>
+            <detail-item label="收益类型" name="incomeSourceName"></detail-item>
+        </row>
+        <detail-table :label="incomeRule" name="incomeRules"></detail-table>
+
+        <detail-header>银行账户信息</detail-header>
+        <template v-if="data.bankCard">
+            <template v-if="data.bankCard.corporate">
+                <row>
+                    <detail-item label="绑定时间" name="bankCard.createTime"></detail-item>
+                    <detail-item label="账户类型" value="对公账户"></detail-item>
+                </row>
+                <row>
+                    <detail-item label="开户名" name="bankCard.accountName"></detail-item>
+                    <detail-item label="开户账号" name="bankCard.accountNo"></detail-item>
+                </row>
+            </template>
+            <template v-else>
+                <row>
+                    <detail-item label="绑定时间" name="bankCard.createTime"></detail-item>
+                    <detail-item label="账户类型" name="个人账户"></detail-item>
+                </row>
+                <row>
+                    <detail-item label="持卡人" name="bankCard.accountName"></detail-item>
+                    <detail-item label="银行类型" name="bankCard.accountName"></detail-item>
+                </row>
+                <row>
+                    <detail-item label="手机号" name="bankCard.mobile"></detail-item>
+                    <detail-item label="银行卡号" name="bankCard.accountNo"></detail-item>
+                </row>
+            </template>
+        </template>
+        <template v-else>暂无银行账户信息</template>
+
+        <detail-header>操作日志</detail-header>
+        <detail-table :label="log" name="logs"></detail-table>
+
     </detail>
 </div>
 <script>
-    let vue = new TestVue()
+    let vue = new TestVue({
+        data: {
+            log: {
+                columns: [
+                    {title: '时间', key: 'createdTime'},
+                    {title: '操作人', key: 'creatorId'},
+                    {title: '类型', key: 'operateCode'},
+                    {title: '描述', key: 'description'},
+                ]
+            },
+            incomeRule: {
+                columns: [
+                    {title: '操作时间', key: 'createdTime'},
+                    {title: '类型', key: 'recyclerTypeName'},
+                    {title: '阶梯净重', key: 'recyclerMinWeight'},
+                    {title: '收益系数(元/克)', key: 'ratio'},
+                ]
+            },
+        }
+    })
 </script>
 </body>
 </html>

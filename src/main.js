@@ -4,6 +4,7 @@ Vue.component('detail', {
         data: {type: Object},
         labelSpan: {type: Number, default: 4},
         valueSpan: {type: Number, default: 8},
+        showClose: {type: Boolean, default: true}
     },
     provide() {
         return {
@@ -12,7 +13,16 @@ Vue.component('detail', {
             $_detail_valueSpan: this.valueSpan,
         };
     },
-    template: '<div class="detail"><slot></slot></div>'
+    template: `<div class="detail">
+                 <slot></slot>
+                 <slot name="close" v-if="showClose">
+                    <row>
+                        <i-col span="24" style="text-align: center">
+                            <i-button @click="window.close()">关闭</i-button>
+                        </i-col>
+                    </row>
+                 </slot>
+              </div>`
 });
 
 
@@ -20,14 +30,22 @@ let childComponentMixIn = {
     props: {
         data: {type: Object, default() {return this.$_detail_data}},
         name: {type: String,},
-        value: {default() {if (this.data && this.name) return this.data[this.name];}}
+        value: {
+            default() {
+                if (this.data && this.name) {
+                    return window.jsonpath
+                        ? jsonpath.value(this.data, `$.${this.name}`)
+                        : this.data[this.name];
+                }
+            }
+        }
     },
     inject: ['$_detail_data', '$_detail_labelSpan', '$_detail_valueSpan'],
 };
 
-/**详情头*/
-Vue.component('detail-header', {
-    template: '<div class="detail-header"><slot></slot></div>'
+/**详情展开*/
+Vue.component('detail-extend', {
+    template: '<div class="detail-extend"><slot></slot></div>'
 });
 
 /**详情项*/
@@ -36,7 +54,7 @@ Vue.component('detail-item', {
     props: {
         label: {type: String, required: true},
         labelSpan: {type: Number, default() {return this.$_detail_labelSpan}},
-        value: {type: [String, Boolean, Number, Array], default() {if (this.data && this.name) return this.data[this.name];}},
+        value: {type: [String, Boolean, Number], default: childComponentMixIn.props.value.default},
         valueSpan: {type: Number, default() {return this.$_detail_valueSpan}},
     },
     template: `<div>
@@ -50,7 +68,7 @@ Vue.component('detail-table', {
     mixins: [childComponentMixIn],
     props: {
         label: {type: Object, required: true},
-        value: {type: Array, default() {if (this.data && this.name) return this.data[this.name];}}
+        value: {type: Array, default: childComponentMixIn.props.value.default}
     },
     inject: ['$_detail_data'],
     template: '<i-table v-bind="label" v-bind:data="value"></i-table>'
