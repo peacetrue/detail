@@ -12,7 +12,7 @@
 </head>
 <body>
 <div id="app">
-    <detail label-span="2" value-span="4">
+    <detail :data="data">
         <detail-header>基本信息</detail-header>
         <row>
             <detail-item label="渠道商编号" :value="data.code"></detail-item>
@@ -23,7 +23,7 @@
             <detail-item label="注册手机号" :value="data.mobile"></detail-item>
         </row>
         <detail-header>推广信息</detail-header>
-        <i-table :columns="promotion.columns" :data="data.promotions"></i-table>
+        <detail-table :label="promotion" :value="data.promotions"></detail-table>
     </detail>
 </div>
 <script>
