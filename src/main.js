@@ -1,29 +1,5 @@
-let parentComponentMixIn = {
-    props: {
-        data: {type: Object},
-    },
-    provide() {
-        return {
-            $_detail_data: this.data,
-            $_detail_labelSpan: this.labelSpan,
-            $_detail_valueSpan: this.valueSpan,
-        };
-    },
-};
-
-let childComponentMixIn = {
-    props: {
-        data: {type: Object, default() {return this.$_detail_data}},
-        name: {type: String,},
-        value: {default() {if (this.data && this.name) return this.data[this.name];}}
-    },
-    inject: ['$_detail_data', '$_detail_labelSpan', '$_detail_valueSpan'],
-};
-
-
 /**详情容器*/
 Vue.component('detail', {
-    mixins: [parentComponentMixIn],
     props: {
         data: {type: Object},
         labelSpan: {type: Number, default: 4},
@@ -39,6 +15,15 @@ Vue.component('detail', {
     template: '<div class="detail"><slot></slot></div>'
 });
 
+
+let childComponentMixIn = {
+    props: {
+        data: {type: Object, default() {return this.$_detail_data}},
+        name: {type: String,},
+        value: {default() {if (this.data && this.name) return this.data[this.name];}}
+    },
+    inject: ['$_detail_data', '$_detail_labelSpan', '$_detail_valueSpan'],
+};
 
 /**详情头*/
 Vue.component('detail-header', {
