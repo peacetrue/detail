@@ -44,8 +44,8 @@ let childComponentMixIn = {
 };
 
 /**详情展开*/
-Vue.component('detail-extend', {
-    template: '<div class="detail-extend"><slot></slot></div>'
+Vue.component('detail-header', {
+    template: '<div class="detail-header"><slot></slot></div>'
 });
 
 /**详情项*/
