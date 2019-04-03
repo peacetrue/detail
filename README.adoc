@@ -20,6 +20,3 @@ v1.0, 2018-03-25: SNAPSHOT
 
 === V1.1
 扩展功能：labelSpan和valueSpan从父容器继承
-
-=== V1.2
-扩展功能：value可通过name从数据中读取
