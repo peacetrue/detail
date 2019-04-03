@@ -41,7 +41,7 @@ Vue.component('detail-item', {
 /**详情表格*/
 Vue.component('detail-table', {
     props: {
-        data: {type: String, default() {return this.$_detail_data}},
+        data: {type: Object, default() {return this.$_detail_data}},
         name: {type: String,},
         label: {type: Object, required: true},
         value: {type: Array, default() {if (this.data && this.name) return this.data[this.name];}}
