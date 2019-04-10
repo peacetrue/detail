@@ -16,11 +16,9 @@ Vue.component('detail', {
     template: `<div class="detail">
                  <slot></slot>
                  <slot name="close" v-if="showClose">
-                    <row>
-                        <i-col span="24" style="text-align: center">
-                            <i-button @click="window.close()">关闭</i-button>
-                        </i-col>
-                    </row>
+                    <div class="detail-close">
+                        <i-button @click="window.close()">关闭</i-button>
+                    </div>
                  </slot>
               </div>`
 });

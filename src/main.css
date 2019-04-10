@@ -1,5 +1,4 @@
 .detail {
-
 }
 
 .detail-header {
@@ -22,6 +21,11 @@
 .detail-item-value {
     text-align: left;
     padding-left: 2px;
+}
+
+.detail-close {
+    text-align: center;
+    margin-top: 8px;
 }
 
 .detail .ivu-row .ivu-col {
